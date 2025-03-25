@@ -66,7 +66,7 @@ def reporting_node(state: State):
 def write_to_storage_node(state: State):
     prompt = state["text"]
     words = prompt.split()
-    stored = save_markdown_to_file(state["report"],  words[-1])
+    stored = save_markdown_to_file(state["report"],  words[-1], 'web')
     return {"stored": stored}
 
 
