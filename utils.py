@@ -51,16 +51,17 @@ def combine_markdown_files(file1_path, file2_path):
         # Open and read the contents of the first file
         with open(file1_path, 'r', encoding='utf-8') as file1:
             content1 = file1.read()
-
         # Open and read the contents of the second file
         with open(file2_path, 'r', encoding='utf-8') as file2:
             content2 = file2.read()
 
         # Combine the contents of both files
         combined_content = content1 + "\n\n" + content2
-
+        logging.info(f"combine_markdown_files: combined content output: {combined_content}")
         return combined_content
-    except FileNotFoundError:
+    except FileNotFoundError as fe:
+        logging.error(f"************************An error occurred while writing to file: {fe}")
         return f"Error: One or both of the files at paths '{file1_path}' and '{file2_path}' were not found."
     except Exception as e:
+        logging.error(f"************************An error occurred while writing to file: {e}")
         return f"An unexpected error occurred: {str(e)}"

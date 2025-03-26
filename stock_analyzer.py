@@ -1,5 +1,6 @@
 from datetime import date
 from pathlib import Path
+import streamlit as st
 
 from utils import combine_markdown_files, REPORT_SUFFIX, PATH_TO_WEB_REPORT, PATH_TO_DATA_REPORT
 
@@ -24,5 +25,8 @@ def main(stock_symbol: str):
 
 
 if __name__ == "__main__":
-    response = main("IBM")
-    print(response)
+    stock_symbol = st.text_input(":blue[Enter a stock symbol here:]", placeholder="eg IBM")
+    submit_btn = st.button("Submit")
+    if stock_symbol and submit_btn:
+        report = main(stock_symbol)
+        st.write(report)
