@@ -2,7 +2,7 @@ from typing import TypedDict
 from langchain_openai import ChatOpenAI
 from langchain_community.tools import DuckDuckGoSearchResults
 from langchain.prompts import PromptTemplate
-from langchain.schema import HumanMessage
+from langchain.schema import HumanMessage, SystemMessage
 from langgraph.graph import StateGraph, END
 import logging
 import streamlit as st
@@ -60,11 +60,11 @@ def reporting_node(state: State):
     words = prompt.split()
     stock_symbol = words[-1]
     query = f"Given the following content: {content}, write an outstanding report about this stock: {stock_symbol}"
-    prompt = PromptTemplate(
-        input_variables=["text"],
-        template=get_report_prompt(stock_symbol))
-    message = HumanMessage(content=prompt.format(text=query))
-    report = llm.invoke([message]).content.strip()
+    messages = [
+        SystemMessage(content=get_report_prompt()),
+        HumanMessage(content=query)
+    ]
+    report = llm.invoke(messages).content.strip()
     return {"report": report}
 
 

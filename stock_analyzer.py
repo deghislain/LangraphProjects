@@ -4,7 +4,7 @@ from WebStockReportWriter.stock_web_search import generate_web_report
 from StockDataReportWriter.stock_data_fetcher import generate_data_report
 from stock_prompt import get_analyse_prompt
 from langchain.prompts import PromptTemplate
-from langchain.schema import HumanMessage
+from langchain.schema import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, END
 import logging
@@ -38,11 +38,12 @@ def perform_financial_analyse_node(state: State):
     logging.info(f"******************************* perform_financial_analyse_node comb_report: {comb_report}")
     stock_symbol = state["text"]
     query = f"Given the following content: {comb_report}, write an outstanding report about this stock: {stock_symbol}"
-    prompt = PromptTemplate(
-        input_variables=["text"],
-        template=get_analyse_prompt())
-    message = HumanMessage(content=prompt.format(text=query))
-    fin_report = llm.invoke([message]).content.strip()
+    messages = [
+        SystemMessage(content=get_analyse_prompt()),
+        HumanMessage(content=query)
+    ]
+
+    fin_report = llm.invoke(messages).content.strip()
     logging.info(f"******************************* perform_financial_analyse_node END with Output: {fin_report}")
     return {"fin_report": fin_report}
 

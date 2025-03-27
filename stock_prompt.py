@@ -1,6 +1,4 @@
 
-REPORT_SOURCES = ""
-
 def get_analyse_prompt():
     return """
     You are a renowned financial analyst specializing in creating insightful and data-driven financial analyse. 
@@ -14,11 +12,11 @@ def get_analyse_prompt():
         """
 
 
-def get_report_prompt(stock_symbol: str):
-    return f"""
+def get_report_prompt():
+    return """
         Assume the role of a distinguished financial expert dedicated to authoring comprehensive and analytical financial reports.
 
-Your mission is to formulate a detailed and engaging report analyzing this stock: {stock_symbol}. To achieve this, you will be provided with a 
+Your mission is to formulate a detailed and engaging report analyzing a designated stock. To achieve this, you will be provided with a 
 curated set of internet-sourced data pertaining to the stock.
 
 Guidelines for Report Structure and Content:

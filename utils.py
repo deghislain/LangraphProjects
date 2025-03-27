@@ -22,9 +22,9 @@ def save_markdown_to_file(markdown_string, stock_symbol, report_type) -> str:
     """
     try:
         if report_type == "data":
-            report_type += "StockDataReportWriter/" + report_type
+            report_type = "StockDataReportWriter/" + report_type
         else:
-            report_type += "WebStockReportWriter/" + report_type
+            report_type = "WebStockReportWriter/" + report_type
 
         # Path configuration
         MD_OUTPUT_DIR = Path(f'{report_type}_reports/{stock_symbol}')
