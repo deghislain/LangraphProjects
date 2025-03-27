@@ -10,6 +10,7 @@ import sys
 
 sys.path.insert(0, '../')
 from utils import save_markdown_to_file
+from stock_prompt import get_report_prompt
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 llm = ChatOpenAI(model="granite3-dense:latest", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
@@ -54,11 +55,15 @@ def parsing_node(state: State):
 
 
 def reporting_node(state: State):
+    content = state["parsing_result"]
+    prompt = state["text"]
+    words = prompt.split()
+    stock_symbol = words[-1]
+    query = f"Given the following content: {content}, write an outstanding report about this stock: {stock_symbol}"
     prompt = PromptTemplate(
         input_variables=["text"],
-        template="""You are experienced writer. Use the following text to write a comprehensive
-          and accurate report. Use the markdown format.\n\nText:{text}\n\nReport""")
-    message = HumanMessage(content=prompt.format(text=state["parsing_result"]))
+        template=get_report_prompt(stock_symbol))
+    message = HumanMessage(content=prompt.format(text=query))
     report = llm.invoke([message]).content.strip()
     return {"report": report}
 

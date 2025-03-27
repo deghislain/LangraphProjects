@@ -1,11 +1,12 @@
 from typing import TypedDict, List, Dict
-from stock_tools import StockTools
+from StockDataReportWriter.stock_tools import StockTools
 from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
 from langchain_openai import ChatOpenAI
 from utils import save_markdown_to_file
 from langgraph.graph import StateGraph, END
 import logging
+from stock_prompt import get_report_prompt
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -37,11 +38,13 @@ def fetch_data_node(state: State):
 
 
 def reporting_node(state: State):
+    content = state["fetched_data"]
+    stock_symbol = state["text"]
+    query = f"Given the following content: {content}, write an outstanding report about this stock: {stock_symbol}"
     prompt = PromptTemplate(
         input_variables=["text"],
-        template="""You are experienced writer. Use the following text to write a comprehensive
-          and accurate report. Use the markdown format.\n\nText:{text}\n\nReport""")
-    message = HumanMessage(content=prompt.format(text=state["fetched_data"]))
+        template=get_report_prompt(stock_symbol))
+    message = HumanMessage(content=prompt.format(text=query))
     report = llm.invoke([message]).content.strip()
     logging.info(f"******************************* reporting_node END with Output: {report}")
     return {"md_report": report}

@@ -1,6 +1,6 @@
 from typing import List, Dict
-import stock_service_utils as stock_dict_keys
-import os
+import StockDataReportWriter.stock_service_utils as stock_dict_keys
+import os, sys
 import requests
 import logging
 
