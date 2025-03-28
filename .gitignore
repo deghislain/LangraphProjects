@@ -4,6 +4,7 @@ __pycache__/
 build/
 dist/
 web_reports/
+reports/
 data_reports/
 wheels/
 *.egg-info

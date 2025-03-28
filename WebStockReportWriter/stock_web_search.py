@@ -102,7 +102,7 @@ def generate_web_report(prompt: str) -> str:
 
 
 if __name__ == "__main__":
-    prompt = "What are the latest about this stock: "
+    prompt = "What are the latest news, updates, or developments about this stock: "
     stock_symbol += st.text_input(":blue[Enter a stock symbol here:]", placeholder="eg IBM")
     submit_btn = st.button("Submit")
     if stock_symbol and submit_btn:
