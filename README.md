@@ -1,5 +1,5 @@
 
-###Stock Analyzer Application
+Stock Analyzer Application
 
 This application showcases the integration of langgraph, AI-agent framework, and Granite, a large language model, to forecast stock performance based on provided stock symbols. The tool collects both specialized and general data to perform comprehensive stock analysis.
 Overview
@@ -19,7 +19,7 @@ Copy
 
 This command assumes that the project structure adheres to the default format within the LangraphProjects directory.
 
-##Technologies Employed
+Technologies Employed
 
     langgraph: An AI-agent framework leveraged to manage the application's workflow and simplify development processes.
     Streamlit: Provides the user interface, enabling interactive engagement through a web-based GUI.

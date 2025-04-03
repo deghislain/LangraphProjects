@@ -1,7 +1,6 @@
 from typing import TypedDict
 from langchain_openai import ChatOpenAI
 from langchain_community.tools import DuckDuckGoSearchResults
-from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage, SystemMessage
 from langgraph.graph import StateGraph, END
 import logging
