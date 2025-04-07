@@ -34,7 +34,7 @@ def generate_data_report_node(state: State):
 
 
 def perform_financial_analyse_node(state: State):
-    comb_report = state["web_report"] + state["data_report"]
+    comb_report = state["data_report"] + state["web_report"]
     logging.info(f"******************************* perform_financial_analyse_node comb_report: {comb_report}")
     stock_symbol = state["text"]
     query = f"Given the following content: {comb_report}, write an outstanding report about this stock: {stock_symbol}"
