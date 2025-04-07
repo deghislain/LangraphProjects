@@ -24,6 +24,31 @@ class TestStockTool(unittest.TestCase):
 
         self.assertEqual(result, self.stock_data_json.get_expected_output())
 
+    def test_retrieve_income_statement_missing_key_type(self):
+        self.stock_data_json = StockDataJson("income.json", "income_expected_output.json")
+
+        with self.assertRaises(ValueError) as ex:
+            retrieve_stock_last_3years_info(self.stock_data_json, '',
+                                            'annualReports')
+            self.assertEqual(str(ex.exception), "Error: Invalid input make sure stock_data, key_type, "
+                                                "and info_type have correct values.")
+
+    def test_retrieve_income_statement_missing_info_type(self):
+        self.stock_data_json = StockDataJson("income.json", "income_expected_output.json")
+
+        with self.assertRaises(ValueError) as ex:
+            retrieve_stock_last_3years_info(self.stock_data_json, 'income_statement',
+                                            '')
+            self.assertEqual(str(ex.exception), "Error: Invalid input make sure stock_data, key_type, "
+                                                "and info_type have correct values.")
+
+    def test_retrieve_income_statement_missing_stock_data(self):
+        with self.assertRaises(ValueError) as ex:
+            retrieve_stock_last_3years_info(None, 'income_statement',
+                                            '')
+            self.assertEqual(str(ex.exception), "Error: Invalid input make sure stock_data, key_type, "
+                                                "and info_type have correct values.")
+
 
 if __name__ == '__main__':
     unittest.main()

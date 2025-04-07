@@ -34,6 +34,8 @@ def retrieve_stock_last_3years_info(stock_data, key_type, info_type) -> List[Dic
     Returns:
         list: List of dictionaries, each representing a specific type of stock data for a year.
     """
+    if stock_data == "" or stock_data is None or key_type == "" or key_type is None or info_type == "" or info_type is None:
+        raise ValueError(f"Error: Invalid input make sure stock_data, key_type, and info_type have correct values.")
 
     info_list = stock_data.json()[info_type]
     logging.info(f"-------------------------------------info_list: {info_list}")
